@@ -26,4 +26,38 @@ public class FirstController {
     public String goodByePage(){
         return "first/goodbye";
     }
+
+    @GetMapping("/calculator")
+    public String calculatorPage(@RequestParam(value = "a", required = false) int a,
+                                 @RequestParam(value = "b", required = false) int b,
+                                 @RequestParam(value = "action", required = false) String action,
+                                 Model model){
+        int result;
+        double resultd;
+        switch (action){
+            case("multiplication"):
+                result = a*b;
+                model.addAttribute("result", "Result " + result);
+                return "first/calculator";
+            case("division"):
+                if (b==0){
+                    model.addAttribute("result", "Делитель не может быть равен 0");
+                }else{
+                    resultd = a/(double)b;
+                    model.addAttribute("result", "Result " + resultd);
+                }
+                return "first/calculator";
+            case("addition"):
+                result = a+b;
+                model.addAttribute("result", "Result " + result);
+                return "first/calculator";
+            case("subtraction"):
+                result = a-b;
+                model.addAttribute("result", "Result " + result);
+                return "first/calculator";
+            default:
+                model.addAttribute("result", "Parameter action is not defined");
+                return "first/calculator";
+        }
+    }
 }
